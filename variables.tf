@@ -3,7 +3,7 @@
 variable "aws_region" {
   description = "AWS region for deployment"
   type        = string
-  // No default - must be provided by the calling root module
+  // No default
 }
 
 variable "vpc_cidr_block" {
@@ -24,14 +24,20 @@ variable "avail_zone" {
   // No default
 }
 
-variable "prefix" {
-  description = "Prefix for resource names (e.g., week5-dev)"
+variable "namespace" { // << REPLACED 'prefix'
+  description = "Namespace for resource naming (e.g., week5)"
+  type        = string
+  // No default
+}
+
+variable "stage" { // << NEW
+  description = "Deployment stage (e.g., dev, prod)"
   type        = string
   // No default
 }
 
 variable "default_tags" {
-  description = "Default tags to be applied to all AWS resources"
+  description = "Default tags to be applied (merged with Name tag)"
   type        = map(any)
-  // No default (the calling module should pass this, e.g. an empty map {} if no specific tags)
+  // No default (calling config must provide, e.g., an empty map {})
 }
