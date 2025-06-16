@@ -1,4 +1,18 @@
 // modules/aws_network/main.tf
+locals {
+  // Base name constructed from namespace and stage
+  // We'll use this to form specific resource names.
+  // Note: The 'name' attribute of aws_security_group must be unique.
+  // The 'Name' tag is more flexible.
+
+  common_tags = merge(var.default_tags, { // Merge with tags passed from calling module
+    Namespace = var.namespace
+    Stage     = var.stage
+    // You could add other fixed common tags here if desired
+  })
+}
+
+
 
 resource "aws_vpc" "custom_vpc" {
   cidr_block           = var.vpc_cidr_block
